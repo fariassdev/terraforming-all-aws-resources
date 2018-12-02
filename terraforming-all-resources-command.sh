@@ -73,6 +73,7 @@ if [ ! -z "$profile" ] && [ ! -z "$region" ]; then
     echo -e "\e[32mDeleting empty terraform files...\e[0m"
 	find . -type f -name '*.tf' | xargs -i bash -c 'if [ $(wc -l {}|cut -d" " -f1) -eq 1 ]; then rm -f {}; fi'
 else
-    exec 3>&1
+    if [ -z "$region" ]; then echo ERROR: Missing option argument "--region". ; fi
+    if [ -z "$profile" ]; then echo ERROR: Missing option argument "--profile". ; fi
     exit 1
 fi
